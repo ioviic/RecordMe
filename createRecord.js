@@ -6,27 +6,33 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 export function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   const data = JSON.parse(event.body);
-  const workSpaceId = uuid.v1();
+  const recordId = uuid.v1();
 
   const params = {
-    TableName: "dev-recordme",
-    // TODO add here expplanation
-    // 'Item' contains the attributes of the workspace item to be created
-    // - 'PK': user identities are federated through the
-    //             Cognito Identity Pool, we will use the identity id
-    //             as the user id of the authenticated user
-    // - 'noteId': a unique uuid
-    // - 'content': parsed from request body
-    // - 'attachment': parsed from request body
-    // - 'createdAt': current Unix timestamp
-    Item: {
-      PK: "w" + workSpaceId,
-      SK: "w" + workSpaceId,
-      Data: data.name,
-      wId: "w" + workSpaceId,
-      logo: data.logo,
-      createdAt: Date.now()
-    }
+        TableName : 'dev-recordme',
+        // TODO add here expplanation
+        // 'Item' contains the attributes of the workspace item to be created
+        // - 'PK': user identities are federated through the
+        //             Cognito Identity Pool, we will use the identity id
+        //             as the user id of the authenticated user
+        // - 'noteId': a unique uuid
+        // - 'content': parsed from request body
+        // - 'attachment': parsed from request body
+        // - 'createdAt': current Unix timestamp
+        Item: {
+          PK: "r" + recordId,
+          SK: data.workspaceId,
+          Data: data.startDate,
+          stop: data.stopDate,
+          description: data.description,
+          rId: "r" + recordId,
+          uId: data.userId,
+          wId: data.workspaceId,
+          tags: [],
+          tagsId: [],
+          deletedAt: null,
+          createdAt: Date.now()
+        }
   };
 
   dynamoDb.put(params, (error, data) => {

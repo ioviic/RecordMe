@@ -6,7 +6,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 export function main(event, context, callback) {
   // Request body is passed in as a JSON encoded string in 'event.body'
   const data = JSON.parse(event.body);
-  const workSpaceId = uuid.v1();
+  const tagId = uuid.v1();
 
   const params = {
     TableName: "dev-recordme",
@@ -20,11 +20,10 @@ export function main(event, context, callback) {
     // - 'attachment': parsed from request body
     // - 'createdAt': current Unix timestamp
     Item: {
-      PK: "w" + workSpaceId,
-      SK: "w" + workSpaceId,
+      PK: data.workspaceId,
+      SK: "t" + tagId,
       Data: data.name,
-      wId: "w" + workSpaceId,
-      logo: data.logo,
+      tId: "t" + tagId,
       createdAt: Date.now()
     }
   };
