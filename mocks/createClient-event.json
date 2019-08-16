@@ -1,0 +1,8 @@
+{
+  "body": "{\"workspaceId\":\"some-Id\",\"name\":\"some-Name\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}

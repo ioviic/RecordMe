@@ -11,13 +11,11 @@ export function main(event, context, callback) {
   const params = {
     TableName: "dev-recordme",
     // TODO add here expplanation
-    // 'Item' contains the attributes of the workspace item to be created
-    // - 'PK': user identities are federated through the
-    //             Cognito Identity Pool, we will use the identity id
-    //             as the user id of the authenticated user
-    // - 'noteId': a unique uuid
-    // - 'content': parsed from request body
-    // - 'attachment': parsed from request body
+    // 'Item' contains the attributes of the Client item to be created
+    // - 'PK': workspaceId
+    // - 'SK': c+[new generated id]
+    // - 'data': name of the client
+    // - 'cId': c+[new generated id]
     // - 'createdAt': current Unix timestamp
     Item: {
       PK: data.workspaceId,
@@ -37,6 +35,7 @@ export function main(event, context, callback) {
 
     // Return status code 500 on error
     if (error) {
+      console.log(error);
       const response = {
         statusCode: 500,
         headers: headers,
